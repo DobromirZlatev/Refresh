@@ -1,0 +1,12 @@
+
+
+refresh.exe
+
+* Desktop Folder management [y]
+* Automatic Backup_03.02.2017 folder to onedrive of entire structure [y]
+* Shortcuts of this month's previous folders and last month's folder for easy access [x]
+
+* Move files from Download folder to todays folder which were downloaded in the last 5-10 minutes [y]
+* Folders which get all files of certain type (.xlsx/.xls; .sql,) etc. For easily finding the file you need out of the many.
+
+* Add MoveDownloadLog, ManageLog and ArchiveLog
