@@ -10,3 +10,9 @@ refresh.exe
 * Folders which get all files of certain type (.xlsx/.xls; .sql,) etc. For easily finding the file you need out of the many.
 
 * Add MoveDownloadLog, ManageLog and ArchiveLog
+
+** Programatically change icons 1,...30, Mon, Tue, ... 
+
+** If there is exception for opened files, create new day folder anyway and keep old day folder on desktop until next time refresh is run after the necessary files are closed. (To not force user to close them)
+
+**Add Parallel.ForEach

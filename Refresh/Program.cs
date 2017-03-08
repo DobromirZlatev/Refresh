@@ -1,43 +1,40 @@
 ﻿using System;
 using System.IO;
 using Microsoft.VisualBasic.FileIO;
+using System.Collections.Generic;
+
 namespace Refresh
 {
     class Program
     {
-
         static string InitialPath = @"C:\Users\dobromir\Desktop\";
-        static string OneDrivePath = @"C:\Users\dobromir\OneDrive\WorkBackup\";
-        static string DownloadsPath = @"C:\Users\dobromir\Downloads\";
+        static string OneDrivePath = @"C:\Users\dobromir\WorkBackup\";
+        static List<string> MonitoredPaths = new List<string>()
+        {
+            @"C:\Users\dobromir\Downloads\",
+            @"C:\Users\dobromir\Pictures\"
+        };
         static int manageChanges = 0;
-        static int moveDownloadChanges = 0;
+        static int moveMonitoredChanges = 0;
         static int archiveChanges = 0;
         static int changes = 0;
         static void Main(string[] args)
         {
-
             try
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
+
                 Console.WriteLine("Managing...");
                 ManageFolders();
-                Console.WriteLine("Managing Folders Complete. (" + manageChanges + " " + GetChange_s(manageChanges) + ")\n");
-
+                Console.WriteLine("Managing Complete. (" + manageChanges + " " + GetChange_s(manageChanges) + ")\n");
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write("Moving Downloads...\n");
-                MoveDownloads();
-                Console.WriteLine("Moving Downloads Complete. (" + moveDownloadChanges + " " + GetChange_s(moveDownloadChanges) + ")\n");
-
+                Console.Write("Moving Files/Folders from Monitored Locations... " + "\n");
+                MoveFromMonitored();
+                Console.WriteLine("Moving Files/Folders from Monitored Locations Complete. (" + moveMonitoredChanges + " " + GetChange_s(moveMonitoredChanges) + ")\n");
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("Archiving...");
                 ArchiveFolders();
-                Console.WriteLine("Archiving Folders Complete. (" + archiveChanges + " " + GetChange_s(archiveChanges) + ")\n");
-                //Console.WriteLine("Type in the extention (.xls or .txt, etc)");
-                //string extention = Console.ReadLine();
-                //Console.WriteLine("Type in the Folder to get the files from (February, 2017//January, etc)");
-                //string folderFrom = Console.ReadLine();
-                //GetFilesWithExtention(extention, folderFrom);
-                //Console.WriteLine("Creating Folder with Files of extention type " + extention + " Complete.\n");
+                Console.WriteLine("Archive Complete. (" + archiveChanges + " " + GetChange_s(archiveChanges) + ")\n");
             }
             catch (Exception ex)
             {
@@ -48,7 +45,7 @@ namespace Refresh
             finally
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                changes = manageChanges + moveDownloadChanges + archiveChanges;
+                changes = manageChanges + moveMonitoredChanges + archiveChanges;
                 Console.WriteLine("All Done! (" + GetTotalChanges() + " total " + GetChange_s(changes) + ")");
                 Console.Read();
             }
@@ -56,8 +53,9 @@ namespace Refresh
 
         static int GetTotalChanges()
         {
-            return manageChanges + moveDownloadChanges + archiveChanges;
+            return manageChanges + moveMonitoredChanges + archiveChanges;
         }
+
         static string GetChange_s(int numberOfChanges)
         {
             if (numberOfChanges == 1)
@@ -215,18 +213,6 @@ namespace Refresh
         {
             for (int i = 1; i <= 10; i++)
             {
-                //moves old month folders
-                if (Directory.Exists(GetMonthPath(DateTime.Now.AddMonths(-i))))
-                {
-                    if (Directory.Exists(GetYearPath(DateTime.Now.AddMonths(-i)) + "\\" + GetMonthName(DateTime.Now.AddMonths(-i))))
-                    {
-                        throw new Exception("\n\nMonth " + GetMonthName(DateTime.Now.AddMonths(-i)) + " exists both in \n" + InitialPath + "\n and in \n" + GetYearPath(DateTime.Now.AddMonths(-i)) + " . Please review manually.\n\n");
-                    }
-                    Directory.Move(GetMonthPath(DateTime.Now.AddMonths(-i)), GetYearPath(DateTime.Now.AddMonths(-i)) + "\\" + GetMonthName(DateTime.Now.AddMonths(-i)));
-                    manageChanges++;
-                    Console.WriteLine("[Folder Moved] \n " + GetMonthPath(DateTime.Now.AddMonths(-i)) + " -> " + GetYearPath(DateTime.Now.AddMonths(-i)) + "\\" + GetMonthName(DateTime.Now.AddMonths(-i)));
-                }
-
                 //moves old day folders
                 if (Directory.Exists(GetDayPath(DateTime.Now.AddDays(-i))))
                 {
@@ -237,6 +223,17 @@ namespace Refresh
                     Directory.Move(GetDayPath(DateTime.Now.AddDays(-i)), GetMonthPath(DateTime.Now.AddDays(-i)) + "\\" + GetDayName(DateTime.Now.AddDays(-i)));
                     manageChanges++;
                     Console.WriteLine("[Folder Moved] \n " + GetDayPath(DateTime.Now.AddDays(-i)) + " -> " + GetMonthPath(DateTime.Now.AddDays(-i)) + "\\" + GetDayName(DateTime.Now.AddDays(-i)));
+                }
+                //moves old month folders
+                if (Directory.Exists(GetMonthPath(DateTime.Now.AddMonths(-i))))
+                {
+                    if (Directory.Exists(GetYearPath(DateTime.Now.AddMonths(-i)) + "\\" + GetMonthName(DateTime.Now.AddMonths(-i))))
+                    {
+                        throw new Exception("\n\nMonth " + GetMonthName(DateTime.Now.AddMonths(-i)) + " exists both in \n" + InitialPath + "\n and in \n" + GetYearPath(DateTime.Now.AddMonths(-i)) + " . Please review manually.\n\n");
+                    }
+                    Directory.Move(GetMonthPath(DateTime.Now.AddMonths(-i)), GetYearPath(DateTime.Now.AddMonths(-i)) + "\\" + GetMonthName(DateTime.Now.AddMonths(-i)));
+                    manageChanges++;
+                    Console.WriteLine("[Folder Moved] \n " + GetMonthPath(DateTime.Now.AddMonths(-i)) + " -> " + GetYearPath(DateTime.Now.AddMonths(-i)) + "\\" + GetMonthName(DateTime.Now.AddMonths(-i)));
                 }
             }
 
@@ -287,43 +284,41 @@ namespace Refresh
 
         }
 
-        static void MoveDownloads()
+        static string MoveFromMonitored()
         {
-            //move new folders from download folder for easy access in today's folder
-            foreach (var path in Directory.GetDirectories(DownloadsPath))
+            string folders = string.Empty;
+            string destPath = string.Empty;
+            foreach (string folder in MonitoredPaths)
             {
-                string folderName = new DirectoryInfo(path).Name;
-                //if file was downloaded/edited in last 1 min
-                var destPath = GetDayPath(DateTime.Now) + "\\" + folderName;
-                if (DateTime.Now.AddMinutes(-10) < new DirectoryInfo(path).LastWriteTime)
+                folders += "[" + folder + "] ";
+                //move new folders from download folder for easy access in today's folder
+                foreach (var path in Directory.GetDirectories(folder))
                 {
-                    Directory.Move(path, destPath);
-                    moveDownloadChanges++;
-                    Console.WriteLine("[Downloaded Folder Moved] \n " + path + " -> " + destPath);
+                    string folderName = new DirectoryInfo(path).Name;
+                    //if folder was downloaded/edited in last 1 min
+                    destPath = GetDayPath(DateTime.Now) + "\\" + folderName;
+                    if (DateTime.Now.AddMinutes(-10) < new DirectoryInfo(path).LastWriteTime || DateTime.Now.AddMinutes(-10) < new DirectoryInfo(path).CreationTime)
+                    {
+                        Directory.Move(path, destPath);
+                        moveMonitoredChanges++;
+                        Console.WriteLine("[Monitored Folder Moved] \n " + path + " -> " + destPath);
+                    }
+                }
+                //move new files from download folder for easy access in today's folder
+                foreach (var path in Directory.GetFiles(folder))
+                {
+                    string fileName = Path.GetFileName(path);
+                    //if file was downloaded/edited in last 10 min
+                    destPath = GetDayPath(DateTime.Now) + "\\" + fileName;
+                    if (DateTime.Now.AddMinutes(-10) < File.GetLastWriteTime(path) || DateTime.Now.AddMinutes(-10) < new DirectoryInfo(path).CreationTime)
+                    {
+                        File.Move(path, destPath);
+                        moveMonitoredChanges++;
+                        Console.WriteLine("[Monitored File Moved] \n " + path + " -> " + destPath);
+                    }
                 }
             }
-            //move new files from download folder for easy access in today's folder
-            foreach (var path in Directory.GetFiles(DownloadsPath))
-            {
-                string fileName = Path.GetFileName(path);
-                //if file was downloaded/edited in last 1 min
-                var destPath = GetDayPath(DateTime.Now) + "\\" + fileName;
-                if (DateTime.Now.AddMinutes(-10) < File.GetLastWriteTime(path))
-                {
-                    File.Move(path, destPath);
-                    moveDownloadChanges++;
-                    Console.WriteLine("[Downloaded File Moved] \n " + path + " -> " + destPath);
-                }
-            }
-
+            return folders;
         }
-
-        //static void GetFilesWithExtention(string extention, string folderFrom)
-        //{
-        //    if (!string.IsNullOrEmpty(extention))
-        //    {
-        //        foreach(InitialPath + folderFrom)
-        //    }
-        //}
     }
 }
