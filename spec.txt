@@ -16,3 +16,4 @@ refresh.exe
 ** If there is exception for opened files, create new day folder anyway and keep old day folder on desktop until next time refresh is run after the necessary files are closed. (To not force user to close them)
 
 **Add Parallel.ForEach 
+* Log of Times Used
