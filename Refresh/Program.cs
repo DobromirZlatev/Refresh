@@ -27,7 +27,7 @@ namespace Refresh
                 Console.WriteLine("Managing...");
                 ManageFolders();
                 Console.WriteLine("Managing Complete. (" + manageChanges + " " + GetChange_s(manageChanges) + ")\n");
-                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write("Moving Files/Folders from Monitored Locations... " + "\n");
                 MoveFromMonitored();
                 Console.WriteLine("Moving Files/Folders from Monitored Locations Complete. (" + moveMonitoredChanges + " " + GetChange_s(moveMonitoredChanges) + ")\n");
