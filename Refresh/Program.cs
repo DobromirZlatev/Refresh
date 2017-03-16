@@ -318,6 +318,19 @@ namespace Refresh
                     }
                 }
             }
+            //get only files from desktop to avoid problems with refresh folders.
+            foreach (var path in Directory.GetFiles(InitialPath))
+            {
+                string fileName = Path.GetFileName(path);
+                //if file was downloaded/edited in last 10 min
+                destPath = GetDayPath(DateTime.Now) + "\\" + fileName;
+                if (DateTime.Now.AddMinutes(-10) < File.GetLastWriteTime(path) || DateTime.Now.AddMinutes(-10) < new DirectoryInfo(path).CreationTime)
+                {
+                    File.Move(path, destPath);
+                    moveMonitoredChanges++;
+                    Console.WriteLine("[Monitored File Moved] \n " + path + " -> " + destPath);
+                }
+            }
             return folders;
         }
     }
