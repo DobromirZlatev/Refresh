@@ -93,31 +93,31 @@ namespace Refresh
             switch (date.Month)
             {
                 case 1:
-                    return "(01) January";
+                    return "January";
                 case 2:
-                    return "(02) February";
+                    return "February";
                 case 3:
-                    return "(03) March";
+                    return "March";
                 case 4:
-                    return "(04) April";
+                    return "April";
                 case 5:
-                    return "(05) May";
+                    return "May";
                 case 6:
-                    return "(06) June";
+                    return "June";
                 case 7:
-                    return "(07) July";
+                    return "July";
                 case 8:
-                    return "(08) August";
+                    return "August";
                 case 9:
-                    return "(09) September";
+                    return "September";
                 case 10:
-                    return "(10) October";
+                    return "October";
                 case 11:
-                    return "(11) November";
+                    return "November";
                 case 12:
-                    return "(12) December";
+                    return "December";
                 default:
-                    return "(13) Error";
+                    return "Error";
             }
         }
         static string GetYearName(DateTime date)
