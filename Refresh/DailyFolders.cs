@@ -201,7 +201,7 @@ namespace Refresh
                     Console.WriteLine("[Folder Moved] \n " + GetDayPath(DateTime.Now.AddDays(-i)) + " -> " + GetMonthPath(DateTime.Now.AddDays(-i)) + "\\" + GetDayName(DateTime.Now.AddDays(-i)));
                 }
             }
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             for (int i = 1; i <= 10; i++)
             {
                 //moves old month folders
