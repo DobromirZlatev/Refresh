@@ -17,3 +17,4 @@ refresh.exe
 
 **Add Parallel.ForEach 
 * Log of Times Used
+* List all files of the separate folders for visibility in a text document.
