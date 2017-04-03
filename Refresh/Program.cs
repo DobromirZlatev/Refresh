@@ -224,6 +224,9 @@ namespace Refresh
                     manageChanges++;
                     Console.WriteLine("[Folder Moved] \n " + GetDayPath(DateTime.Now.AddDays(-i)) + " -> " + GetMonthPath(DateTime.Now.AddDays(-i)) + "\\" + GetDayName(DateTime.Now.AddDays(-i)));
                 }
+            }
+            for (int i = 1; i <= 10; i++)
+            {
                 //moves old month folders
                 if (Directory.Exists(GetMonthPath(DateTime.Now.AddMonths(-i))))
                 {
