@@ -7,8 +7,6 @@ namespace Refresh
 {
     class Program
     {
-        static string InitialPath = @"C:\Users\dobromir\Desktop\";
-        static string BackupPath = @"C:\Users\dobromir\WorkBackup\";
         static List<string> MonitoredPaths = new List<string>()
         {
             @"C:\Users\dobromir\Downloads\",
@@ -16,7 +14,11 @@ namespace Refresh
         };
         static void Main(string[] args)
         {
-            DailyFolders df = new DailyFolders(InitialPath, BackupPath, MonitoredPaths, false);
+            DailyFolders df = new DailyFolders(@"C:\Users\dobromir\Desktop\", 
+                @"C:\Users\dobromir\WorkBackup\", 
+                new List<string>() { @"C:\Users\dobromir\Downloads\", @"C:\Users\dobromir\Pictures\" }, 
+                false);
+
             try
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
