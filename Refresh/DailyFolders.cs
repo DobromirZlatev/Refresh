@@ -32,7 +32,7 @@ namespace Refresh
             return ManageChanges + MoveMonitoredChanges + ArchiveChanges;
         }
 
-        public string GetChange_s(int numberOfChanges)
+        public string ChangeOrChanges(int numberOfChanges)
         {
             if (numberOfChanges == 1)
             {

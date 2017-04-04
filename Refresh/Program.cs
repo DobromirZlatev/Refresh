@@ -17,23 +17,23 @@ namespace Refresh
             DailyFolders df = new DailyFolders(@"C:\Users\dobromir\Desktop\", 
                 @"C:\Users\dobromir\WorkBackup\", 
                 new List<string>() { @"C:\Users\dobromir\Downloads\", @"C:\Users\dobromir\Pictures\" }, 
-                false);
+                true);
 
             try
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Managing...");
                 df.ManageFolders();
-                Console.WriteLine("Managing Complete. (" + df.ManageChanges + " " + df.GetChange_s(df.ManageChanges) + ")\n");
+                Console.WriteLine("Managing Complete. (" + df.ManageChanges + " " + df.ChangeOrChanges(df.ManageChanges) + ")\n");
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write("Moving Files/Folders from Monitored Locations... " + "\n");
                 df.MoveFromMonitored();
-                Console.WriteLine("Moving Files/Folders from Monitored Locations Complete. (" + df.MoveMonitoredChanges + " " + df.GetChange_s(df.MoveMonitoredChanges) + ")\n");
+                Console.WriteLine("Moving Files/Folders from Monitored Locations Complete. (" + df.MoveMonitoredChanges + " " + df.ChangeOrChanges(df.MoveMonitoredChanges) + ")\n");
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("Archiving...");
                 df.ArchiveFolders();
                 
-                Console.WriteLine("Archive Complete. (" + df.ArchiveChanges + " " + df.GetChange_s(df.ArchiveChanges) + ")\n");
+                Console.WriteLine("Archive Complete. (" + df.ArchiveChanges + " " + df.ChangeOrChanges(df.ArchiveChanges) + ")\n");
                 
             }
             catch (Exception ex)
@@ -46,7 +46,7 @@ namespace Refresh
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 df.Changes = df.ManageChanges + df.MoveMonitoredChanges + df.ArchiveChanges;
-                Console.WriteLine("All Done! (" + df.GetTotalChanges() + " total " + df.GetChange_s(df.Changes) + ")");
+                Console.WriteLine("All Done! (" + df.GetTotalChanges() + " total " + df.ChangeOrChanges(df.Changes) + ")");
                 Console.Read();
             }
         }
