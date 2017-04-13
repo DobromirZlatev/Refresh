@@ -301,12 +301,15 @@ namespace Refresh
                 {
                     string fileName = Path.GetFileName(path);
                     //if file was downloaded/edited in last 10 min
-                    destPath = GetDayPath(DateTime.Now) + "\\" + fileName;
-                    if (DateTime.Now.AddMinutes(-10) < File.GetLastWriteTime(path) || DateTime.Now.AddMinutes(-10) < new DirectoryInfo(path).CreationTime)
+                    if (!fileName.Contains("Refresh"))//dont move Refresh shortcut
                     {
-                        File.Move(path, destPath);
-                        MoveMonitoredChanges++;
-                        Console.WriteLine("[Monitored File Moved] \n " + path + " -> " + destPath);
+                        destPath = GetDayPath(DateTime.Now) + "\\" + fileName;
+                        if (DateTime.Now.AddMinutes(-10) < File.GetLastWriteTime(path) || DateTime.Now.AddMinutes(-10) < new DirectoryInfo(path).CreationTime)
+                        {
+                            File.Move(path, destPath);
+                            MoveMonitoredChanges++;
+                            Console.WriteLine("[Monitored File Moved] \n " + path + " -> " + destPath);
+                        }
                     }
                 }
             }

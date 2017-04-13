@@ -15,7 +15,7 @@ namespace Refresh
         static void Main(string[] args)
         {
             DailyFolders df = new DailyFolders(@"C:\Users\dobromir\Desktop\", 
-                @"C:\Users\dobromir\WorkBackup\", 
+                @"F:\WorkBackup\", 
                 new List<string>() { @"C:\Users\dobromir\Downloads\", @"C:\Users\dobromir\Pictures\" }, 
                 true);
 
