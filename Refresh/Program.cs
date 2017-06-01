@@ -39,7 +39,7 @@ namespace Refresh
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message.ToString());
                 Console.Read();
             }
             finally

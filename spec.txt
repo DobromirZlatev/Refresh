@@ -18,3 +18,13 @@ refresh.exe
 **Add Parallel.ForEach 
 * Log of Times Used
 * List all files of the separate folders for visibility in a text document.
+
+
+
+REFRESH 2.0
+
+1) Add DB
+2) Set and change options from console
+3) Save list of file names / details in db so it can be called through the console: example input: 15/05/2017 would yield a list of files and folders in folder 2017>>05>>15;
+4) Renaming of empty folders to [x-Empty] where x is the current name
+5) Better exception handling so that it is helpful to the user and they know what they need to do (Example: User needs to close certain documents that are inside the folder that needs to be moved by the process)
