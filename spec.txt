@@ -37,3 +37,9 @@ if (!Directory.Exists(path))
 DirectoryInfo di = Directory.CreateDirectory(path); 
 di.Attributes = FileAttributes.Directory | FileAttributes.Hidden; 
 }
+7) Add continuous functionality while the console is on - Think of what could be helpful
+While(true)
+{
+...
+Thread.Sleep(60000)//wait 1 minute
+}
