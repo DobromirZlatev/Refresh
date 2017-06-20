@@ -28,3 +28,12 @@ REFRESH 2.0
 3) Save list of file names / details in db so it can be called through the console: example input: 15/05/2017 would yield a list of files and folders in folder 2017>>05>>15;
 4) Renaming of empty folders to [x-Empty] where x is the current name
 5) Better exception handling so that it is helpful to the user and they know what they need to do (Example: User needs to close certain documents that are inside the folder that needs to be moved by the process)
+6) Hide/Unhide folders
+using System.IO; 
+
+string path = @"c:\folders\newfolder"; // or whatever 
+if (!Directory.Exists(path)) 
+{ 
+DirectoryInfo di = Directory.CreateDirectory(path); 
+di.Attributes = FileAttributes.Directory | FileAttributes.Hidden; 
+}
