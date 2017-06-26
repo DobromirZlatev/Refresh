@@ -43,3 +43,5 @@ While(true)
 ...
 Thread.Sleep(60000)//wait 1 minute
 }
+
+7) Add int count = myDir.GetFiles().Length;  [May (54 items)] and [04 (3 items)]
