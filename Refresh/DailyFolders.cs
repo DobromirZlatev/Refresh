@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace Refresh
 {
     class DailyFolders
     {
+        public List<string> ListOfQuotes { get; set; }
         public int ManageChanges { get; set; }
         public int MoveMonitoredChanges { get; set; }
         public int ArchiveChanges { get; set; }
@@ -21,10 +23,29 @@ namespace Refresh
         bool MonitorInitialPath { get; set; }
         public DailyFolders(string initialPath, string backupPath, List<string> monitoredPaths, bool monitorInitialPath)
         {
-            InitialPath = initialPath;
-            BackupPath = backupPath;
-            MonitoredPaths = monitoredPaths;
-            MonitorInitialPath = monitorInitialPath;
+            ListOfQuotes = new List<string>();
+            try
+            {
+                string listOfQuotesFile = Path.Combine(
+                      Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath),
+                      "Resources",
+                      "quotes.txt");
+                var listOfQuotesText = File.ReadAllText(listOfQuotesFile);
+                string[] listOfQuotesTextParts = listOfQuotesText.Split('#');
+                foreach (var quote in listOfQuotesTextParts)
+                {
+                    ListOfQuotes.Add(quote);
+                }
+
+                InitialPath = initialPath;
+                BackupPath = backupPath;
+                MonitoredPaths = monitoredPaths;
+                MonitorInitialPath = monitorInitialPath;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         public int GetTotalChanges()
@@ -251,9 +272,15 @@ namespace Refresh
                 }
                 else
                 {
+
+
                     Directory.CreateDirectory(GetDayPath(DateTime.Now));
                     ManageChanges++;
                     Console.WriteLine("[Folder Created] \n " + GetDayPath(DateTime.Now));
+
+                    Random r = new Random();
+                    int index = r.Next(0, ListOfQuotes.Count() - 1);
+                    File.WriteAllText(Path.Combine(GetDayPath(DateTime.Now), "DW.txt"), ListOfQuotes[index]);
                 }
             }
 
