@@ -47,3 +47,5 @@ Thread.Sleep(60000)//wait 1 minute
 7) Add int count = myDir.GetFiles().Length;  [May (54 items)] and [04 (3 items)]
 
 8) Google calendar API to add events and other uses.
+
+9) Commands in common language inside .txt file to perform certain custom tasks for user
