@@ -15,13 +15,14 @@ namespace Refresh
         static List<string> MonitoredPaths = new List<string>()
         {
             @"C:\Users\dobromir\Downloads\",
-            @"C:\Users\dobromir\Pictures\"
+            @"C:\Users\dobromir\Pictures\",
+            @"C:\Users\dobromir\Documents\"
         };
         static void Main(string[] args)
         {
             DailyFolders df = new DailyFolders(@"C:\Users\dobromir\Desktop\",
                 @"F:\WorkBackup\",
-                new List<string>() { @"C:\Users\dobromir\Downloads\", @"C:\Users\dobromir\Pictures\" },
+                MonitoredPaths,
                 true);
 
             //try
