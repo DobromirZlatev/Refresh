@@ -12,59 +12,17 @@ namespace Refresh
 {
     class Program
     {
+        static string YourUserName = "Dodo";
         static List<string> MonitoredPaths = new List<string>()
         {
-            @"C:\Users\dobromir\Downloads\",
-            @"C:\Users\dobromir\Pictures\",
-            @"C:\Users\dobromir\Documents\"
+            @"C:\Users\"+YourUserName+@"\Downloads\",
+            @"C:\Users\"+YourUserName+@"\Pictures\"
+            //@"C:\Users\"+YourUserName+@"\Documents\"
         };
         static void Main(string[] args)
         {
-            DailyFolders df = new DailyFolders(@"C:\Users\dobromir\Desktop\", @"F:\WorkBackup\", MonitoredPaths, true);
+            DailyFolders df = new DailyFolders(@"C:\Users\"+ YourUserName + @"\Desktop\", @"C:\RefreshBackup\", MonitoredPaths, false);
 
-            //try
-            //{
-            //    UserCredential credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-            //    new ClientSecrets
-            //    {
-            //        ClientId = "241811363389-gkb4q30v85brccom3sur5spaap24scm4.apps.googleusercontent.com",
-            //        ClientSecret = "Kn9cWTMBTyFr7u7aQ6dRAALB",
-            //    },
-            //    new[] { CalendarService.Scope.Calendar },
-            //    "DobromirZlatev",
-            //    CancellationToken.None).Result;
-            //    var service = new CalendarService(new BaseClientService.Initializer()
-            //    {
-            //        HttpClientInitializer = credential,
-            //        ApplicationName = "CalendarQuickstart",
-            //    });
-            //    Event myEvent = new Event
-            //    {
-            //        Summary = "Appointment",
-            //        Location = "Somewhere",
-            //        Start = new EventDateTime()
-            //        {
-            //            DateTime = DateTime.Now.AddHours(1),
-            //            TimeZone = "Europe/London"
-            //        },
-            //        End = new EventDateTime()
-            //        {
-            //            DateTime = DateTime.Now.AddHours(2),
-            //            TimeZone = "Europe/London"
-            //        },
-            //        Recurrence = new String[] { "RRULE:FREQ=WEEKLY;BYDAY=MO" },
-            //        Attendees = new List<EventAttendee>()
-            //        {
-            //            new EventAttendee() { Email = "dobromirzlatessv@gmail.com" }
-            //        }
-            //    };
-
-            //    Event recurringEvent = service.Events.Insert(myEvent, "primary").Execute();
-            //}
-            //catch(Exception ex)
-            //{
-            //    Console.WriteLine(ex);
-            //}
 
             try
             {
