@@ -298,9 +298,11 @@ namespace Refresh
                 foreach (var path in Directory.GetDirectories(folder))
                 {
                     string folderName = new DirectoryInfo(path).Name;
-                    //if folder was downloaded/edited in last 1 min
+                    //if folder was downloaded/edited in last x min
                     destPath = GetDayPath(DateTime.Now) + "\\" + folderName;
-                    if (DateTime.Now.AddMinutes(-10) < new DirectoryInfo(path).LastWriteTime || DateTime.Now.AddMinutes(-10) < new DirectoryInfo(path).CreationTime)
+                    if (!folderName.Contains(".lnk")
+                        && (DateTime.Now.AddMinutes(-10) < new DirectoryInfo(path).LastWriteTime
+                        || DateTime.Now.AddMinutes(-10) < new DirectoryInfo(path).CreationTime))
                     {
                         Directory.Move(path, destPath);
                         MoveMonitoredChanges++;
@@ -327,8 +329,8 @@ namespace Refresh
                 foreach (var path in Directory.GetFiles(InitialPath))
                 {
                     string fileName = Path.GetFileName(path);
-                    //if file was downloaded/edited in last 10 min
-                    if (!fileName.Contains("Refresh"))//dont move Refresh shortcut
+                    //if file was downloaded/edited in last x min
+                    if (!fileName.Contains(".lnk"))//dont move Refresh shortcut
                     {
                         destPath = GetDayPath(DateTime.Now) + "\\" + fileName;
                         if (DateTime.Now.AddMinutes(-10) < File.GetLastWriteTime(path) || DateTime.Now.AddMinutes(-10) < new DirectoryInfo(path).CreationTime)

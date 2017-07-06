@@ -20,10 +20,7 @@ namespace Refresh
         };
         static void Main(string[] args)
         {
-            DailyFolders df = new DailyFolders(@"C:\Users\dobromir\Desktop\",
-                @"F:\WorkBackup\",
-                MonitoredPaths,
-                true);
+            DailyFolders df = new DailyFolders(@"C:\Users\dobromir\Desktop\", @"F:\WorkBackup\", MonitoredPaths, true);
 
             //try
             //{
