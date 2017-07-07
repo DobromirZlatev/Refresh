@@ -12,7 +12,7 @@ namespace Refresh
 {
     class Program
     {
-        static string YourUserName = "Dodo";
+        static string YourUserName = "dobromir";
         static List<string> MonitoredPaths = new List<string>()
         {
             @"C:\Users\"+YourUserName+@"\Downloads\",
